@@ -82,9 +82,6 @@ export const pageQuery = graphql`
         title
         subtitle
         text
-        postAuthor {
-          name
-        }
         publishedOn(formatString: "MMMM DD YYYY")
         coverImage {
           url
