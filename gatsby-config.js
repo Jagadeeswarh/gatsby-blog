@@ -6,7 +6,7 @@ module.exports = {
       summary: ` - successful medical practice starts here`,
     },
     description: `Our practice tools and services make running a medical practice - large or small, a breeze.`,
-    siteUrl: `https://www.glenwoodsystems.com/`
+    siteUrl: `https://www.glenwoodsystems.com/`,
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -71,31 +71,34 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.nodes.map(node => {
-                return Object.assign({}, node.frontmatter, {
-                  description: node.excerpt,
-                  date: node.frontmatter.date,
-                  url: site.siteMetadata.siteUrl + node.fields.slug,
-                  guid: site.siteMetadata.siteUrl + node.fields.slug,
-                  custom_elements: [{ "content:encoded": node.html }],
-                })
+            serialize: ({ query: { site, allLetterdropPosts } }) => {
+              return allLetterdropPosts.nodes.map(node => {
+                return Object.assign(
+                  {},
+                  {
+                    title: node.title,
+                    date: node.publishedOn,
+                  },
+                  {
+                    description: node.subtitle || node.text,
+                    date: node.publishedOn,
+                    url: site.siteMetadata.siteUrl + node.url,
+                    guid: site.siteMetadata.siteUrl + node.url,
+                    custom_elements: [{ "content:encoded": node.text }],
+                  }
+                )
               })
             },
             query: `
               {
-                allMarkdownRemark(
-                  sort: { order: DESC, fields: [frontmatter___date] },
-                ) {
+                allLetterdropPosts(sort: { fields: [publishedOn], order: DESC }) {
                   nodes {
-                    excerpt
-                    html
-                    fields {
-                      slug
-                    }
-                    frontmatter {
-                      title
-                      date
+                    id
+                    url
+                    title
+                    publishedOn
+                    coverImage {
+                      url
                     }
                   }
                 }
