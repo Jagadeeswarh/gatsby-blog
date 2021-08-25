@@ -7,7 +7,7 @@ import Seo from "../components/seo"
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
-  const posts = data.allMarkdownRemark.nodes
+  const posts = data.allLetterdropPosts.nodes
 
   if (posts.length === 0) {
     return (
@@ -29,10 +29,10 @@ const BlogIndex = ({ data, location }) => {
       <Bio />
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
-          const title = post.frontmatter.title || post.fields.slug
+          const title = post.title || post.url
 
           return (
-            <li key={post.fields.slug}>
+            <li key={post.url}>
               <article
                 className="post-list-item"
                 itemScope
@@ -40,16 +40,19 @@ const BlogIndex = ({ data, location }) => {
               >
                 <header>
                   <h2>
-                    <Link to={post.fields.slug} itemProp="url">
+                    <Link to={post.url} itemProp="url">
                       <span itemProp="headline">{title}</span>
-                    </Link>
+                    </Link>                    
                   </h2>
-                  <small>{post.frontmatter.date}</small>
+                  <small>{post.publishedOn}</small>
+                  <small>
+                    {post.postAuthor ? " - by " + post.postAuthor.name : ""}
+                  </small>
                 </header>
                 <section>
                   <p
                     dangerouslySetInnerHTML={{
-                      __html: post.frontmatter.description || post.excerpt,
+                      __html: post.subtitle || post.text,
                     }}
                     itemProp="description"
                   />
@@ -72,16 +75,19 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allLetterdropPosts(sort: { fields: [publishedOn], order: DESC }, filter: {}) {
       nodes {
-        excerpt
-        fields {
-          slug
+        id
+        url
+        title
+        subtitle
+        text
+        postAuthor {
+          name
         }
-        frontmatter {
-          date(formatString: "MMMM DD, YYYY")
-          title
-          description
+        publishedOn(formatString: "MMMM DD YYYY")
+        coverImage {
+          url
         }
       }
     }

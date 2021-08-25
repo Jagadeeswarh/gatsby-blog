@@ -1,15 +1,12 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Letterdrop Blog`,
+    title: `Glenwood Letterdrop Blog`,
     author: {
-      name: `Jagadeeswar H`,
-      summary: `who lives and works in Chennai, IN building useful things.`,
+      name: `Glenwood`,
+      summary: ` - successful medical practice starts here`,
     },
-    description: `A starter blog demonstrating what Gatsby+Letterdrop can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
-    social: {
-      twitter: `jagadeeswar_h`,
-    },
+    description: `Our practice tools and services make running a medical practice - large or small, a breeze.`,
+    siteUrl: `https://www.glenwoodsystems.com/`
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -126,5 +123,12 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
+    {
+      resolve: "@letterdropcom/gatsby-source-letterdrop",
+      options: {
+        apikey: "98VGYDT-SFWMH5F-QZHRXR2-9ZBRBBX",
+        version: "v1",
+      },
+    },
   ],
 }
