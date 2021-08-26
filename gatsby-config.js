@@ -129,7 +129,7 @@ module.exports = {
     {
       resolve: "@letterdropcom/gatsby-source-letterdrop",
       options: {
-        apikey: "8WJ680S-Q4S4DJJ-K755CW8-24QSVJE",
+        apikey: "JXH6CES-Y10MJ7M-NTT3FAB-VA1QRNX",
         version: "v1",
       },
     },

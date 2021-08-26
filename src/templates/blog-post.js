@@ -25,7 +25,7 @@ const BlogPostTemplate = ({ data, location }) => {
           <p>{post.publishedOn}</p>
         </header>
         <section
-          dangerouslySetInnerHTML={{ __html: post.text }}
+          dangerouslySetInnerHTML={{ __html: post.htmlText }}
           itemProp="articleBody"
         />
         <hr />
@@ -80,7 +80,7 @@ export const pageQuery = graphql`
       nodes {
         title
         subtitle
-        text
+        htmlText
         publishedOn(formatString: "MMMM DD YYYY")
       }
     }
